@@ -9,7 +9,7 @@ w = 480
 img = np.ones((h, w, 3), np.uint8)
 
 f=0
-def sinwave(freq, ampl):
+def sinwave(freq=0.03, ampl=255):
     '''
     Simple sine wave function
     can be used to modulate color intensity
@@ -39,23 +39,29 @@ def noise_gen():
     r=np.random.randint(0,255)
     img[x, y, :]=[b, g, r]
 
-counter_blue=0
-def blue_wf():
+counter_blue_top=0
+counter_blue_bottom=479
+def blue_wf(speed=5):
     '''
     Creates blue waves flowing over the image
         Paramters:
+                speed (float): Speed and direction of the waves;
         Returns:
     To do: add modulation
     '''
-    global counter_blue
-    img[0:counter_blue, :, 0]+=1
-    counter_blue+=1
+    global counter_blue_top, counter_blue_bottom
+    if speed==0:
+        pass
+    elif speed>=1:
+        img[0:counter_blue_top, :, 0]+=speed
+        counter_blue_top+=1
+    else:
+        img[counter_blue_bottom:479, :, 0]-=abs(speed)
+        counter_blue_bottom-=1
     
 while True:
     #noise_gen()
-    #blue_wf()
-    print(sinwave(0.1, 255))
-    
+    blue_wf(0)
     cv2.imshow('image', img)
     c = cv2.waitKey(1)
     if c & 0xFF == ord("q"):
