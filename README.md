@@ -1,2 +1,2 @@
 # videosynth
-A little Videosynthesizer based on opencv and numpy - WIP
+A little interactive Videosynthesizer based on opencv and numpy - WIP
