@@ -58,13 +58,32 @@ def blue_wf(speed=5):
     else:
         img[counter_blue_bottom:479, :, 0]-=abs(speed)
         counter_blue_bottom-=1
+
+def reset():
+    '''
+    reset function to return to black image
+    '''
+    global img, counter_blue_bottom, counter_blue_top, f
+    #reset image
+    img = np.ones((h, w, 3), np.uint8)
+    #reset blue wave function
+    counter_blue_top=0
+    counter_blue_bottom=479
+    #reset sine wave
+    f=0
+
+reset()
     
 while True:
-    #noise_gen()
-    blue_wf(0)
     cv2.imshow('image', img)
+    noise_gen()
+    #blue_wf()
+
+    #cv2.imshow('image', img)
     c = cv2.waitKey(1)
     if c & 0xFF == ord("q"):
         cv2.destroyAllWindows()
         break
+    if c & 0xFF == ord("r"):
+        reset()
 
