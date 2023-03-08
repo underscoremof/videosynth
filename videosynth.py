@@ -6,7 +6,8 @@ starting image; resolution hxw
 '''
 h = 480 
 w = 720 
-img = np.ones((h, w, 3), np.uint8)
+img = np.zeros((h, w, 3), np.uint8)
+filtered = np.zeros((h, w, 3), np.uint8)
 controls=np.zeros((1, w, 3), np.uint8)
 cv2.namedWindow('image')
 
@@ -43,7 +44,7 @@ def noise_gen():
 
 counter_blue_top=0
 counter_blue_bottom=479
-def blue_wf(speed=10):
+def blue_wf(speed=3):
     '''
     Creates blue waves flowing over the image
         Paramters:
@@ -52,7 +53,7 @@ def blue_wf(speed=10):
     To do: add modulation
     '''
     global counter_blue_top, counter_blue_bottom
-    speed=cv2.getTrackbarPos('test', 'image')
+    speed=cv2.getTrackbarPos('Blue', 'image')
     if speed==0:
         pass
     elif speed>=1:
@@ -100,19 +101,46 @@ def reset():
     counter_blue_bottom=479
     f=0
 
+BGRfilter_array=np.ones((h, w, 3), np.float16)
+def color_filter():
+    '''
+    Postprocessing BGR color filter
+    '''
+    global filtered
+    b_filter=cv2.getTrackbarPos('B', 'image')/100 #eine 
+    #g_filter=cv2.getTrackbarPos('G', 'image')/100
+    #r_filter=cv2.getTrackbarPos('R', 'image')/100
+    BGRfilter_array[:, :, 0]=b_filter
+    img_asfloat=img.astype(float)
+    filtered_asfloat=np.multiply(BGRfilter_array, img_asfloat)
+    filtered=filtered_asfloat.astype(np.uint8) 
+    
+
 def nothing(p):
     pass
 
-cv2.createTrackbar('test', 'image', 0, 10, nothing)
+cv2.createTrackbar('Blue', 'image', 3, 10, blue_wf)
+cv2.createTrackbar('B', 'image', 100, 100, nothing)
+#cv2.createTrackbar('G', 'image', 100, 100, nothing)
+#cv2.createTrackbar('R', 'image', 100, 100, nothing)
 
+'''
+The Synsthesizer is split into two parts:
+    Preprocessing; the actual self modulating image synthesis containing:
+            Random noise generator
+            Color generator
+            Faux feedback
+    Postprocessing: does not influence image modulation
+            BGR-filter
+'''
 frame_counter = 0
 while True:
     noise_gen()
     blue_wf()
     faux_feedback()
-    #cv2.imshow('Controls', controls)
+    color_filter()
     if frame_counter % 2 == 0:
-        cv2.imshow('image', img)
+        cv2.imshow('image', filtered)
     c = cv2.waitKey(10)
     if c & 0xFF == ord("q"):
         cv2.destroyAllWindows()
