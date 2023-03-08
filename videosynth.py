@@ -7,6 +7,8 @@ starting image; resolution hxw
 h = 480 
 w = 720 
 img = np.ones((h, w, 3), np.uint8)
+controls=np.zeros((1, w, 3), np.uint8)
+cv2.namedWindow('image')
 
 f=0
 def sinwave(freq=0.03, ampl=255):
@@ -21,7 +23,6 @@ def sinwave(freq=0.03, ampl=255):
     '''
     global f
     jj=int(((np.sin(f)+1)/2)*ampl)
-    #frequency
     f+=freq
     return jj
 
@@ -42,7 +43,7 @@ def noise_gen():
 
 counter_blue_top=0
 counter_blue_bottom=479
-def blue_wf(speed=1):
+def blue_wf(speed=10):
     '''
     Creates blue waves flowing over the image
         Paramters:
@@ -51,6 +52,7 @@ def blue_wf(speed=1):
     To do: add modulation
     '''
     global counter_blue_top, counter_blue_bottom
+    speed=cv2.getTrackbarPos('test', 'image')
     if speed==0:
         pass
     elif speed>=1:
@@ -97,13 +99,18 @@ def reset():
     counter_blue_top=0
     counter_blue_bottom=479
     f=0
-reset()
+
+def nothing(p):
+    pass
+
+cv2.createTrackbar('test', 'image', 0, 10, nothing)
 
 frame_counter = 0
 while True:
     noise_gen()
     blue_wf()
     faux_feedback()
+    #cv2.imshow('Controls', controls)
     if frame_counter % 2 == 0:
         cv2.imshow('image', img)
     c = cv2.waitKey(10)
