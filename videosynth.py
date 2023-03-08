@@ -98,14 +98,17 @@ def reset():
     f=0
 reset()
 
+frame_counter = 0
 while True:
     noise_gen()
     #blue_wf()
     faux_feedback()
-    cv2.imshow('image', img)
+    if frame_counter % 2 == 0:
+        cv2.imshow('image', img)
     c = cv2.waitKey(10)
     if c & 0xFF == ord("q"):
         cv2.destroyAllWindows()
         break
     if c & 0xFF == ord("r"):
         reset()
+    frame_counter += 1
