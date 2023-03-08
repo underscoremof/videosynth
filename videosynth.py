@@ -44,7 +44,7 @@ def noise_gen():
 
 counter_blue_top=0
 counter_blue_bottom=479
-def blue_wf(speed=3):
+def blue_wf(speed=5):
     '''
     Creates blue waves flowing over the image
         Paramters:
@@ -107,10 +107,11 @@ def color_filter():
     Postprocessing BGR color filter
     '''
     global filtered
-    b_filter=cv2.getTrackbarPos('B', 'image')/100 #eine 
-    #g_filter=cv2.getTrackbarPos('G', 'image')/100
+    b_filter=cv2.getTrackbarPos('B', 'image')/100
+    g_filter=cv2.getTrackbarPos('G', 'image')/100
     #r_filter=cv2.getTrackbarPos('R', 'image')/100
     BGRfilter_array[:, :, 0]=b_filter
+    BGRfilter_array[:, :, 1]=g_filter
     img_asfloat=img.astype(float)
     filtered_asfloat=np.multiply(BGRfilter_array, img_asfloat)
     filtered=filtered_asfloat.astype(np.uint8) 
@@ -119,17 +120,17 @@ def color_filter():
 def nothing(p):
     pass
 
-cv2.createTrackbar('Blue', 'image', 3, 10, blue_wf)
+cv2.createTrackbar('Blue', 'image', 5, 10, blue_wf)
 cv2.createTrackbar('B', 'image', 100, 100, nothing)
-#cv2.createTrackbar('G', 'image', 100, 100, nothing)
+cv2.createTrackbar('G', 'image', 100, 100, nothing)
 #cv2.createTrackbar('R', 'image', 100, 100, nothing)
 
 '''
-The Synsthesizer is split into two parts:
+The Synthesizer is split into two parts consisting of (so far):
     Preprocessing; the actual self modulating image synthesis containing:
             Random noise generator
             Color generator
-            Faux feedback
+            Simulating feedback
     Postprocessing: does not influence image modulation
             BGR-filter
 '''
