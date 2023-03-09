@@ -8,8 +8,9 @@ h = 480
 w = 720 
 img = np.zeros((h, w, 3), np.uint8)
 filtered = np.zeros((h, w, 3), np.uint8)
-controls=np.zeros((1, w, 3), np.uint8)
-cv2.namedWindow('image')
+preprocessing=np.zeros((1, w, 3), np.uint8)
+cv2.namedWindow('Video')
+cv2.namedWindow('Processing')
 
 f=0
 def sinwave(freq=0.03, ampl=255):
@@ -53,7 +54,7 @@ def blue_wf(speed=5):
     To do: add modulation
     '''
     global counter_blue_top, counter_blue_bottom
-    speed=cv2.getTrackbarPos('Blue', 'image')
+    speed=cv2.getTrackbarPos('Blue', 'Processing')
     if speed==0:
         pass
     elif speed>=1:
@@ -107,9 +108,9 @@ def color_filter():
     Postprocessing BGR color filter
     '''
     global filtered
-    b_filter=cv2.getTrackbarPos('B', 'image')/100
-    g_filter=cv2.getTrackbarPos('G', 'image')/100
-    r_filter=cv2.getTrackbarPos('R', 'image')/100
+    b_filter=cv2.getTrackbarPos('B', 'Processing')/100
+    g_filter=cv2.getTrackbarPos('G', 'Processing')/100
+    r_filter=cv2.getTrackbarPos('R', 'Processing')/100
     BGRfilter_array[:, :, 0]=b_filter
     BGRfilter_array[:, :, 1]=g_filter
     BGRfilter_array[:, :, 2]=r_filter
@@ -121,12 +122,12 @@ def color_filter():
 def nothing(p):
     pass
 
-cv2.createTrackbar('Blue', 'image', 5, 10, blue_wf)
-cv2.createTrackbar('B', 'image', 100, 100, nothing)
-cv2.createTrackbar('G', 'image', 100, 100, nothing)
-cv2.createTrackbar('R', 'image', 100, 100, nothing)
-#cv2.createTrackbar('Zoom', 'image', 50, 100, nothing)
-#cv2.createTrackbar('Rotation', 'image', 50, 100, nothing)
+cv2.createTrackbar('Blue', 'Processing', 5, 10, blue_wf)
+cv2.createTrackbar('B', 'Processing', 100, 100, nothing)
+cv2.createTrackbar('G', 'Processing', 100, 100, nothing)
+cv2.createTrackbar('R', 'Processing', 100, 100, nothing)
+cv2.createTrackbar('Zoom', 'Processing', 50, 100, nothing)
+cv2.createTrackbar('Rotation', 'Processing', 50, 100, nothing)
 
 '''
 The Synthesizer is split into two parts consisting of (so far):
@@ -144,7 +145,7 @@ while True:
     faux_feedback()
     color_filter()
     if frame_counter % 2 == 0:
-        cv2.imshow('image', filtered)
+        cv2.imshow('Video', filtered)
     c = cv2.waitKey(10)
     if c & 0xFF == ord("q"):
         cv2.destroyAllWindows()
