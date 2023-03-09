@@ -64,7 +64,7 @@ def blue_wf(speed=5):
         img[counter_blue_bottom:479, :, 0]-=abs(speed)
         counter_blue_bottom-=1
 
-'''Filter kernel for video feedback simulation'''
+'''Filter kernel for video feedback simulation; turns out actually not needed; kept for later maybe'''
 fb_ker_outside = 0.11
 fb_ker_center = -10
 feedback_kernel = np.array(
@@ -120,26 +120,16 @@ def color_filter():
     filtered_asfloat=np.multiply(BGRfilter_array, img_asfloat)
     filtered=filtered_asfloat.astype(np.uint8) 
     
-
 def nothing(p):
     pass
 
 cv2.createTrackbar('Blue', 'Processing', 5, 20, blue_wf)
-cv2.createTrackbar('Zoom', 'Processing', 50, 100, nothing)
-cv2.createTrackbar('Rotation', 'Processing', 50, 100, nothing)
+cv2.createTrackbar('Zoom', 'Processing', 51, 100, nothing)
+cv2.createTrackbar('Rotation', 'Processing', 90, 100, nothing)
 cv2.createTrackbar('B', 'Processing', 100, 100, nothing)
 cv2.createTrackbar('G', 'Processing', 100, 100, nothing)
 cv2.createTrackbar('R', 'Processing', 100, 100, nothing)
 
-'''
-The Synthesizer is split into two parts consisting of (so far):
-    Preprocessing; the actual self modulating image synthesis containing:
-            Random noise generator
-            Color generator
-            Simulating feedback
-    Postprocessing: does not influence image modulation
-            BGR-filter
-'''
 frame_counter = 0
 while True:
     noise_gen()
