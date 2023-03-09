@@ -77,7 +77,7 @@ feedback_kernel = np.array(
 ''' Parameters for opencv rotation matrix function'''
 (h, w) = img.shape[:2]
 (cX, cY) = (w // 2, h // 2)
-def faux_feedback(angle=1, zoom=1.05):
+def faux_feedback(angle=10, zoom=0.95):
     '''
     Combination of rotation and filtering image simulating analog camera feedback
         Parameters: 
@@ -125,6 +125,8 @@ cv2.createTrackbar('Blue', 'image', 5, 10, blue_wf)
 cv2.createTrackbar('B', 'image', 100, 100, nothing)
 cv2.createTrackbar('G', 'image', 100, 100, nothing)
 cv2.createTrackbar('R', 'image', 100, 100, nothing)
+#cv2.createTrackbar('Zoom', 'image', 50, 100, nothing)
+#cv2.createTrackbar('Rotation', 'image', 50, 100, nothing)
 
 '''
 The Synthesizer is split into two parts consisting of (so far):
@@ -149,4 +151,6 @@ while True:
         break
     if c & 0xFF == ord("r"):
         reset()
+    if c & 0xFF == ord("s"):
+        cv2.imwrite('recordings/01.jpg', filtered)
     frame_counter += 1
