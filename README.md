@@ -1,38 +1,57 @@
-# Videosynth - WIP
-<p>A little interactive Videosynthesizer that simulates videofeedback, the process of pointing a camera at its own playback monitor.</p>
-<br>
-<p>The videosynth is split into two parts: </p>
-<p>Preprocessing stage: the actual self modulating image synthesis containing:</p>
-<ul>
-    <li> Random Noise Generator </li>
-    <li> Color Generator </li>
-    <li> Feedback Simulator </li>
-</ul>
-<br>
-<p> Postprocessing stage: does not influence videosynthesis:</p>
-<ul>
-    <li> BGR Filter </li>
-</ul> 
+# Videosynth
+
+A little interactive Videosynthesizer that simulates videofeedback, the process of pointing a camera at its own playback monitor.
+
+The videosynth is split into two parts: 
+
+Preprocessing stage: the actual self-modulating image synthesis containing:
+
+* Random Noise Generator
+* Color Generator
+* Feedback Simulation
+
+Postprocessing:does not influence videosynthesis:
+
+* BGR-Filter
 
 
 ## Prerequisites
 
-<p>(Asuming you already have <a hreaf="https://pip.pypa.io/en/stable/"> pip </a>, <a hreaf="https://www.python.org/downloads/">python</a> and <a hreaf="https://git-scm.com/downloads"> git </a> installed)</p>
-<br>
-<p>To run this script please first install the following libraries:</p>
-<ul>
-    <li><a hreaf="https://docs.opencv.org/4.x/d0/d3d/tutorial_general_install.html">opencv</a><br> if not installed please run: <br>
-    ''' pip install opencv'''<br>
-    in your terminal</li>
-    <li><a>numpy</a></li>
-</ul>
+(Asuming you already have [pip](https://pip.pypa.io/en/stable/), [python](https://www.python.org/downloads/) and [git](https://git-scm.com/downloads) installed)
+
+To run the script please first install the follwoing libraries:
+* [opencv](https://docs.opencv.org/4.x/index.html)
+* [numpy](https://numpy.org/)
+
+if not installed please run:
+```bash
+pip install "name of library"
+```
+in your terminal.
+
 
 
 ## How to use
-Clone Repository
-navigate to folder 
-run videosynth.py
-controls:
+
+1. Clone repositiry
+
+```bash
+git clone https://github.com/underscoremof/videosynth.git
+```
+2. Navigate to folder
+```bash
+cd .\videosynth\
+```
+3. Run script
+```bash
+python videosynth.py
+```
+### Controls:
+Once the script is running you should see two windows. One called "Video" displaing the actual synthesized video and one called "Processing" which contains the trackbars giving you controll over pre- and post processing of the video. Additionally you can always press the "r" key on your keyboard to reset the synthesis, the"s" key to save a screenshot of the video or the "q" key to terminate the script.
+
+This is a work in progress and might change in the future.
 
 ## Acknowledgements
-<p>This project was inspired by several reddit posts on r/videosynthesis by user u/STEEDOE.</p>
+
+This project was inspired by several reddit posts on r/videosynthesis by user [u/STEEDOE](https://www.reddit.com/user/STEEDOE/).
+
