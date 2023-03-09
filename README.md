@@ -1,4 +1,4 @@
-# Videosynth
+# Videosynth - WIP
 
 A little interactive Videosynthesizer that simulates videofeedback, the process of pointing a camera at its own playback monitor.
 
