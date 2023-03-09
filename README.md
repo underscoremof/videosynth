@@ -1,14 +1,16 @@
 # Videosynth - WIP
 <p>A little interactive Videosynthesizer that simulates videofeedback, the process of pointing a camera at its own playback monitor.</p>
 
-<p>The videosynth is split into two parts: <br>
-<ul>Preprocessing stage: the actual self modulating image synthesis containing:
+<p>The videosynth is split into two parts: </p>
+<p>Preprocessing stage: the actual self modulating image synthesis containing:</p>
+<ul>
     <li> Random Noise Generator </li>
     <li> Color Generator </li>
     <li> Feedback Simulator </li>
 </ul>
 <br>
-<ul>Postprocessing stage:
+<p> Postprocessing stage: does not influence videosynthesis:</p>
+<ul>
     <li> BGR Filter </li>
 </ul> 
 
