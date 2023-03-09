@@ -78,16 +78,18 @@ feedback_kernel = np.array(
 ''' Parameters for opencv rotation matrix function'''
 (h, w) = img.shape[:2]
 (cX, cY) = (w // 2, h // 2)
-def faux_feedback(angle=10, zoom=0.95):
+def faux_feedback(angle=0, zoom=1):
     '''
-    Combination of rotation and filtering image simulating analog camera feedback
+    Combination of rotation and zoom simulating analog camera feedback
         Parameters: 
                 angle (int): Angle of rotation
-                zoom (float): zoom in (or out)
+                zoom (float): zoom in (or out) 1.5<zoom>0.5
         Returns:
     To do: add modulation
     '''
     global img
+    angle=cv2.getTrackbarPos('Rotation', 'Processing')
+    zoom=0.01*cv2.getTrackbarPos('Zoom', 'Processing')+0.5
     M = cv2.getRotationMatrix2D((cX, cY), angle, zoom)
     rotated = cv2.warpAffine(img, M, (w, h))
     img = rotated
@@ -122,12 +124,12 @@ def color_filter():
 def nothing(p):
     pass
 
-cv2.createTrackbar('Blue', 'Processing', 5, 10, blue_wf)
+cv2.createTrackbar('Blue', 'Processing', 5, 20, blue_wf)
+cv2.createTrackbar('Zoom', 'Processing', 50, 100, nothing)
+cv2.createTrackbar('Rotation', 'Processing', 50, 100, nothing)
 cv2.createTrackbar('B', 'Processing', 100, 100, nothing)
 cv2.createTrackbar('G', 'Processing', 100, 100, nothing)
 cv2.createTrackbar('R', 'Processing', 100, 100, nothing)
-cv2.createTrackbar('Zoom', 'Processing', 50, 100, nothing)
-cv2.createTrackbar('Rotation', 'Processing', 50, 100, nothing)
 
 '''
 The Synthesizer is split into two parts consisting of (so far):
