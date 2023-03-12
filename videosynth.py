@@ -2,7 +2,9 @@ import numpy as np
 import cv2
 
 '''
-starting image; resolution hxw
+configuration for starting image; resolution hxw
+                    video window
+                    processing window
 '''
 h = 480 
 w = 720 
@@ -11,6 +13,7 @@ filtered = np.zeros((h, w, 3), np.uint8)
 preprocessing=np.zeros((1, w, 3), np.uint8)
 cv2.namedWindow('Video')
 cv2.namedWindow('Processing')
+cv2.resizeWindow('Processing', 500, 400)
 
 f=0
 def sinwave(freq=0.03, ampl=255):
@@ -129,6 +132,21 @@ cv2.createTrackbar('Rotation', 'Processing', 90, 100, nothing)
 cv2.createTrackbar('B', 'Processing', 100, 100, nothing)
 cv2.createTrackbar('G', 'Processing', 100, 100, nothing)
 cv2.createTrackbar('R', 'Processing', 100, 100, nothing)
+cv2.createTrackbar('Mirror', 'Processing', 0, 1, nothing)
+
+
+mirrored=np.zeros((h,w,3), np.uint8)
+def mirror():
+    global mirrored
+    x=cv2.getTrackbarPos('Mirror', 'Processing')
+    if x==1:
+        linke_hälfte=filtered[:, 0:w//2, :]
+        hälfte_linke=cv2.flip(linke_hälfte, 1)
+        mirrored[:, 0:w//2]=linke_hälfte
+        mirrored[:, w//2:w]=hälfte_linke
+    else:
+        mirrored = filtered  
+
 
 frame_counter = 0
 while True:
@@ -136,8 +154,10 @@ while True:
     blue_wf()
     faux_feedback()
     color_filter()
+    #filtered2 = cv2. cvtColor(filtered, cv2.COLOR_BGR2HSV)
+    mirror()
     if frame_counter % 2 == 0:
-        cv2.imshow('Video', filtered)
+        cv2.imshow('Video', mirrored)
     c = cv2.waitKey(10)
     if c & 0xFF == ord("q"):
         cv2.destroyAllWindows()
