@@ -47,7 +47,7 @@ cd .\videosynth\
 python videosynth.py
 ```
 ### Controls:
-Once the script is running you should see two windows. One called "Video" displaing the actual synthesized video and one called "Processing" which contains the trackbars giving you controll over preprocessing ("Blue", "Zoom" and "Speed" *) and postprocessing ("B", "G", "R" *) of the video. Additionally you can always press the "r" key on your keyboard to reset the synthesis, the "s" key to save a screenshot of the video or the "q" key to terminate the script.
+Once the script is running you should see two windows. One called "Video" displaing the actual synthesized video and one called "Processing" which contains the trackbars giving you controll over preprocessing ("Blue", "Zoom" and "Speed" *) and postprocessing ("B", "G", "R", "Mirror *) of the video. Additionally you can always press the "r" key on your keyboard to reset the synthesis, the "s" key to save a screenshot of the video or the "q" key to terminate the script.
 
 *This is a work in progress and might change in the future.
 
