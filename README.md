@@ -13,6 +13,7 @@ Preprocessing stage: the actual self-modulating image synthesis containing:
 Postprocessing:does not influence videosynthesis:
 
 * BGR-Filter
+* Mirroring Function
 
 
 ## Prerequisites
